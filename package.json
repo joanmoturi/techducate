@@ -1,0 +1,55 @@
+{
+  "name": "techducate",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": "^24.14.0 || ^26.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "tsx watch --env-file-if-exists=.env server/index.ts",
+    "dev:web": "vite --host 127.0.0.1",
+    "typecheck": "tsc -b",
+    "build": "npm run typecheck && vite build",
+    "lint": "oxlint",
+    "format": "prettier --write src server shared tests *.json *.ts index.html README.md docs",
+    "test": "tsx --test server/*.test.ts",
+    "test:e2e": "playwright test",
+    "db:migrate": "tsx --env-file-if-exists=.env server/cli.ts migrate",
+    "staff": "tsx --env-file-if-exists=.env server/cli.ts",
+    "recovery": "tsx --env-file-if-exists=.env server/recovery.ts",
+    "review:create": "tsx server/review.ts",
+    "start": "tsx --env-file-if-exists=.env server/index.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.9.0",
+    "tsx": "^4.20.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.56.0",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/supertest": "^6.0.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^9.2.0",
+    "oxlint": "^1.88.0",
+    "prettier": "^3.6.2",
+    "supertest": "^7.1.4",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4"
+  }
+}

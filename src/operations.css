@@ -1,0 +1,47 @@
+.operations-workspace .field select[multiple] {
+  min-height: 120px;
+}
+.operations-workspace .funding-editor {
+  overflow-wrap: anywhere;
+}
+.impact-report .panel {
+  break-inside: avoid;
+}
+.impact-report table {
+  min-width: 0;
+  width: 100%;
+}
+.history-data {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 360px;
+  overflow: auto;
+  font-size: 12px;
+}
+@media print {
+  body:has(.impact-report) * {
+    visibility: hidden;
+  }
+  body:has(.impact-report) .no-print {
+    display: none !important;
+  }
+  .impact-report,
+  .impact-report * {
+    visibility: visible !important;
+    color: #172a22 !important;
+  }
+  .impact-report {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 12mm;
+    font-size: 11pt;
+  }
+  .impact-report .panel {
+    box-shadow: none;
+    margin-bottom: 8mm;
+  }
+  .impact-report .table-scroll {
+    overflow: visible;
+  }
+}
