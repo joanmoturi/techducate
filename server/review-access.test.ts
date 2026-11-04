@@ -72,3 +72,28 @@ test('gate is opt-in and partial or weak review configuration fails closed', asy
     createApp(db, { origin, reviewAccess: { username: 'reviewer', password: '' } }),
   )
 })
+test('expired reviews deny pages, assets and APIs even with correct credentials', async () => {
+  const expired = createApp(db, {
+    origin,
+    staticDirectory: directory,
+    reviewAccess: { ...access, expiresAt: '2020-01-01T00:00:00.000Z' },
+  })
+  for (const path of ['/', '/fixture.js', '/api/health']) {
+    const response = await request(expired)
+      .get(path)
+      .auth(access.username, access.password)
+      .expect(410)
+    assert.equal(response.headers['cache-control'], 'no-store')
+    assert.doesNotMatch(response.text, /Private review fixture|const fixture/)
+  }
+})
+test('a future review deadline permits access and invalid deadlines fail closed', async () => {
+  const active = createApp(db, {
+    origin,
+    reviewAccess: { ...access, expiresAt: new Date(Date.now() + 60_000).toISOString() },
+  })
+  await request(active).get('/api/health').auth(access.username, access.password).expect(200)
+  assert.throws(() =>
+    createApp(db, { origin, reviewAccess: { ...access, expiresAt: 'not-a-date' } }),
+  )
+})

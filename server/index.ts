@@ -11,11 +11,14 @@ if (publicUrl.origin !== origin)
 if (production && publicUrl.protocol !== 'https:')
   throw new Error('Production APP_ORIGIN must use HTTPS.')
 const reviewConfigured =
-  process.env.REVIEW_USERNAME !== undefined || process.env.REVIEW_PASSWORD !== undefined
+  process.env.REVIEW_USERNAME !== undefined ||
+  process.env.REVIEW_PASSWORD !== undefined ||
+  process.env.REVIEW_EXPIRES_AT !== undefined
 const reviewAccess = reviewConfigured
   ? reviewAccessSchema.parse({
       username: process.env.REVIEW_USERNAME,
       password: process.env.REVIEW_PASSWORD,
+      expiresAt: process.env.REVIEW_EXPIRES_AT,
     })
   : undefined
 const databasePath = process.env.DATABASE_PATH ?? './data/techducate.sqlite'

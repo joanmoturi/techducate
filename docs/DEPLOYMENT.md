@@ -150,6 +150,34 @@ CSRF-authenticated mutations succeed. Then update `reviewUrl` in the private
 credential file and the current address in this document. Do not print passwords,
 session cookies or CSRF tokens as verification output.
 
+## Disposable Render cloud review
+
+The optional `server\review-cloud.ts` entry point supports a free, disposable
+Render **Node web service**, independently of this Windows computer. Build with
+`npm ci --include=dev && npm run build`, then start with
+`node --import tsx server/review-cloud.ts`. Set `NODE_VERSION` to a supported
+Node 24.14+ or Node 26 release.
+
+Provision fresh fictional fixtures locally in a separate private working
+directory using `server\review.ts`; do not upload either existing local database.
+Upload a base64 encoding of the closed fixture database as the Render secret file
+`techducate-review.sqlite.b64`. Keep it and its separate credentials outside Git.
+Set private environment variables `REVIEW_USERNAME`, `REVIEW_PASSWORD` and an
+absolute UTC `REVIEW_EXPIRES_AT` deadline. The entry point requires all three,
+uses Render's exact HTTPS origin, and restores the snapshot into temporary storage.
+
+Every page, asset and API is password-protected and returns HTTP 410 after the
+deadline, including requests using valid credentials. This deadline survives
+restarts because it is an absolute environment value, not a process timer.
+Expiry blocks access; it does not delete the Render service or its secret files.
+Delete the temporary service in Render after testing.
+
+Use the **Free** instance plan with no payment method. Free instances sleep
+after 15 idle minutes, can take about a minute to wake, and lose SQLite changes
+on sleep, restart or redeployment. The original fixture accounts and records
+are restored on the next startup. This option is only for disposable fictional
+testing, not a durable database or production launch.
+
 ## Permanent hosting remains a separate task
 
 The current API requires a running Node process and durable SQLite storage.
