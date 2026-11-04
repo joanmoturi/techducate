@@ -1,6 +1,6 @@
 # Techducate source and deployment record
 
-Last reconciled: **31 October 2026**, East Africa Time (UTC+03:00).
+Last reconciled: **4 November 2026**, East Africa Time (UTC+03:00).
 
 ## Source of truth
 
@@ -31,10 +31,11 @@ and published revisions; do not assume an old copied directory is current.
 | Local development website | `http://127.0.0.1:5173`                                     | Vite development server                                              |
 | Local development API     | `http://127.0.0.1:3001`                                     | API with the normal database                                         |
 | Isolated review backend   | `http://127.0.0.1:3002`                                     | Built website plus API, review database and whole-site password gate |
-| Current shared review     | `https://duration-consolidated-atlas-mid.trycloudflare.com` | Temporary Cloudflare tunnel to review port 3002                      |
+| Previously shared local review | `https://duration-consolidated-atlas-mid.trycloudflare.com` | Historical Cloudflare tunnel to review port 3002; not reverified on 4 November |
+| Disposable cloud review   | `https://techducate-test-20261104.onrender.com`              | Free Render Node web service with fresh fictional fixtures and a 24-hour access deadline |
 | Netlify                   | No Techducate site was verified                             | Not configured or deployed in this project                           |
 
-The review is hosted on this Windows computer, not on GitHub or Netlify.
+The Cloudflare review is hosted on this Windows computer, not on GitHub or Netlify.
 The computer, network, tunnel and review server must remain running.
 It is a fictional client-review environment, not a production launch.
 The outer browser password prompt is separate from the application's role login.
@@ -151,6 +152,15 @@ credential file and the current address in this document. Do not print passwords
 session cookies or CSRF tokens as verification output.
 
 ## Disposable Render cloud review
+
+Created on 4 November 2026 in the user's personal Render workspace, service
+`srv-dbljl2u1egvs73ffthsg`, Free plan, Frankfurt. Access expires on
+**5 November 2026 at 17:00:41 East Africa Time** (`2026-11-05T14:00:41Z`).
+Automatic Git deployments are disabled. The separate local databases were not
+uploaded or modified; a fresh fictional review snapshot and new passwords were
+provisioned privately. Credentials and deployment metadata are in the private
+`cloud-review` directory in Copilot session
+`1465959e-c753-4f12-bb1a-f316bb6d687e`.
 
 The optional `server\review-cloud.ts` entry point supports a free, disposable
 Render **Node web service**, independently of this Windows computer. Build with
